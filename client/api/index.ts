@@ -7,16 +7,21 @@ import {
   UserWord
 } from '../types'
 
-const baseLink = 'https://stanislau-rs-lang.herokuapp.com/'
 
+const baseLink = 'https://stanislau-rs-lang.herokuapp.com/';
 
 class Controller {
   baseLink: string;
+
   options?: string;
+
   token?: string;
+
   userId?: string;
-  constructor(baseLink: string) {
-    this.baseLink = baseLink
+
+  constructor(link: string) {
+    this.baseLink = link;
+
   }
 
   async createUser(user: User) {
@@ -37,10 +42,10 @@ class Controller {
     const rawResponse = await fetch(`${this.baseLink}/signin`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     });
     const content: LoginResp = await rawResponse.json();
     if (content.token && content.userId) {
@@ -52,16 +57,16 @@ class Controller {
 
   async createUserWord({ userId, word, wordId }: CreateUserWordReq) {
     if (!this.token) {
-      throw new Error('unauthorized user')
+      throw new Error('unauthorized user');
     }
     const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words/${wordId}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${this.token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${this.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(word)
+      body: JSON.stringify(word),
     });
     const content: CreateUserWordResp = await rawResponse.json();
 
@@ -70,21 +75,19 @@ class Controller {
 
   async getUserWord({ userId, wordId }: UserWord) {
     if (!this.token) {
-      throw new Error('unauthorized user')
+
+      throw new Error('unauthorized user');
     }
     const rawResponse = await fetch(`https://<your-app-name>.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${this.token}`,
-        'Accept': 'application/json',
-      }
+        Authorization: `Bearer ${this.token}`,
+        Accept: 'application/json',
+      },
     });
     const content: CreateUserWordResp = await rawResponse.json();
 
     return content;
   }
-
 }
-
-
 export default new Controller(baseLink);
