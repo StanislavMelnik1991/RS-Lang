@@ -4,9 +4,8 @@ import {
   CreateUserWordResp,
   LoginResp,
   User,
-  UserWord
-} from '../types'
-
+  UserWord,
+} from '../types';
 
 const baseLink = 'https://stanislau-rs-lang.herokuapp.com/';
 
@@ -21,22 +20,21 @@ class Controller {
 
   constructor(link: string) {
     this.baseLink = link;
-
   }
 
   async createUser(user: User) {
     const rawResponse = await fetch(`${this.baseLink}/users`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     });
     const content: CreateResp = await rawResponse.json();
 
     return content;
-  };
+  }
 
   async loginUser(user: User) {
     const rawResponse = await fetch(`${this.baseLink}/signin`, {
@@ -75,7 +73,6 @@ class Controller {
 
   async getUserWord({ userId, wordId }: UserWord) {
     if (!this.token) {
-
       throw new Error('unauthorized user');
     }
     const rawResponse = await fetch(`https://<your-app-name>.herokuapp.com/users/${userId}/words/${wordId}`, {

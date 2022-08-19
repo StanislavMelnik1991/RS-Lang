@@ -1,29 +1,33 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, VStack } from "@chakra-ui/react";
-import { useFormik } from "formik"
-import * as Yup from "yup";
+import {
+  Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, VStack,
+} from '@chakra-ui/react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const Login = () => {
+  const {
+    handleChange, handleSubmit, values, errors, resetForm,
+  } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string().required('email is required'),
+      password: Yup.string().required('password is required'),
+    }),
+    onSubmit: (val) => {
+      // eslint-disable-next-line no-alert
+      alert(JSON.stringify(val, null, 2));
+      resetForm();
+    },
+  });
 
-    const { handleChange, handleSubmit, values, errors, touched, resetForm } = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-        validationSchema: Yup.object().shape({
-            email: Yup.string().required('email is required'),
-            password: Yup.string().required('password is required'),
-        }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
-            resetForm()
-        }
-    });
-
-    return (
+  return (
         <form onSubmit={handleSubmit}>
             <VStack
                 mx='auto'
-                w={{ base: "90%", md: 500 }}
+                w={{ base: '90%', md: 500 }}
                 h="100vh"
                 justifyContent="center">
 
@@ -61,8 +65,7 @@ const Login = () => {
             </VStack>
         </form>
 
+  );
+};
 
-    )
-}
-
-export default Login
+export default Login;
