@@ -1,15 +1,17 @@
-import Open from "./../assets/images/open.svg";
-import Close from "./../assets/images/close.svg";
 import {
-  Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, InputGroup, InputRightElement, VStack,
+  Button, FormControl, FormErrorMessage,
+  FormLabel, Heading, Input, InputGroup,
+  InputRightElement, VStack,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import Close from '../assets/images/close.svg';
+import Open from '../assets/images/open.svg';
 
 const SignUp = () => {
   const {
-    handleChange, handleSubmit, values, errors, resetForm, setFieldValue
+    handleChange, handleSubmit, values, errors, resetForm,
   } = useFormik({
     initialValues: {
       name: '',
@@ -28,10 +30,10 @@ const SignUp = () => {
     },
   });
 
-  const [showPass, setShowPass] = useState(false)
+  const [showPass, setShowPass] = useState(false);
   const handleClick = () => {
-    setShowPass(!showPass)
-  }
+    setShowPass(!showPass);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -99,5 +101,4 @@ const SignUp = () => {
   );
 };
 
-
-export default SignUp
+export default SignUp;
