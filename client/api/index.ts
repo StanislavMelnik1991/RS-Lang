@@ -1,3 +1,4 @@
+import { CreateUser } from './../types/index';
 import {
   CreateResp,
   CreateUserWordReq,
@@ -7,7 +8,7 @@ import {
   UserWord,
 } from '../types';
 
-const baseLink = 'https://stanislau-rs-lang.herokuapp.com/';
+const baseLink = 'https://stanislau-rs-lang.herokuapp.com';
 
 class Controller {
   baseLink: string;
@@ -22,7 +23,7 @@ class Controller {
     this.baseLink = link;
   }
 
-  async createUser(user: User) {
+  async createUser(user: CreateUser) {
     const rawResponse = await fetch(`${this.baseLink}/users`, {
       method: 'POST',
       headers: {
