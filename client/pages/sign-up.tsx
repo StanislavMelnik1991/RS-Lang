@@ -13,10 +13,9 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { signUp } from '../store/reducers/ActionCreators';
 
 const SignUp = () => {
-
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const {success} = useAppSelector(state => state.registerReducer)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { success } = useAppSelector((state) => state.registerReducer);
 
   const {
     handleChange, handleSubmit, values, errors, resetForm,
@@ -32,7 +31,7 @@ const SignUp = () => {
       password: Yup.string().required('password is required').min(6, 'Password must be at least 6 characters long'),
     }),
     onSubmit: (val) => {
-      dispatch(signUp(val))
+      dispatch(signUp(val));
       resetForm();
     },
   });
@@ -43,8 +42,8 @@ const SignUp = () => {
   };
 
   if (success) {
-    router.replace('/login')
- }
+    router.replace('/login');
+  }
   return (
     <form onSubmit={handleSubmit}>
       <VStack
