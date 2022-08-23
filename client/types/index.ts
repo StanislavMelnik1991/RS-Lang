@@ -1,7 +1,7 @@
 export interface User { email: string; password: string; }
 export interface CreateUser extends User { name: string}
 export interface CreateResp { id: string, email: string }
-export interface LoginResp { message: string, token: string, userId: string }
+export interface LoginResp { message: string, token: string, userId: string, name: string }
 export interface CreateUserWordReq extends UserWord { word: Word }
 export interface CreateUserWordResp extends Word { id: string; wordId: string; }
 interface Word {

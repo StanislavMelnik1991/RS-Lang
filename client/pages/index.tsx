@@ -1,10 +1,36 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { useAppSelector } from '../hooks/redux';
+import { authSlice } from '../store/reducers/AuthSlice';
 import styles from '../styles/Home.module.css';
 
-const Home: NextPage = () => (
+const Home: NextPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+    if (isLoggedIn && JSON.parse(isLoggedIn)) {
+      const name = localStorage.getItem('name');
+      const token = localStorage.getItem('token');
+      const userID = localStorage.getItem('userID');
+      if (name && token && userID) {
+        dispatch(authSlice.actions.loginSuccess({
+          userID: JSON.parse(userID),
+          name: JSON.parse(name),
+          token: JSON.parse(token),
+        }));
+      }
+    }
+  }, [dispatch]);
+
+  const { name } = useAppSelector((state) => state.authReducer);
+
+  return (
     <div className={styles.container}>
       <Head>
         <title>RS Lang</title>
@@ -13,9 +39,7 @@ const Home: NextPage = () => (
       </Head>
       <Header />
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <h1 className={styles.title}> Hello </h1> <span>{name}</span>
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -55,6 +79,7 @@ const Home: NextPage = () => (
 
       <Footer />
     </div>
-);
+  );
+};
 
 export default Home;
