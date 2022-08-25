@@ -1,10 +1,13 @@
 import type { NextPage } from 'next';
-import styles from '../../styles/Home.module.css';
+import { Box } from '@chakra-ui/react'
 
 const Header: NextPage = () => (
-    <div className={styles.container}>
-      <h1>Header</h1>
-    </div>
+    <Box display='flex' justifyContent='space-between' w='100%' border='2px solid black' bg="purple.500" color="white">
+      <span>Header </span>
+      <span>Help </span>
+      <span>Profile </span>
+      <span>Level </span>
+    </Box>
 );
 
 export default Header;

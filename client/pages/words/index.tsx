@@ -1,4 +1,4 @@
-import { Checkbox, Button, Input } from "@chakra-ui/react";
+import { Checkbox, Button, Input, ListItem, List } from "@chakra-ui/react";
 import { useState } from "react";
 
 
@@ -13,12 +13,12 @@ const Words = () => {
   };
 
   const listItems = wordsList.map((word) => (
-    <li>
+    <ListItem>
       <Checkbox defaultChecked>{word}</Checkbox>
-    </li>
+    </ListItem>
   ));
 
-  const wordList = () => <ul>{listItems}</ul>;
+  const wordList = () => <List border='1px' borderColor='gray.200' width='320px' borderRadius='8px' alignContent='center'>{listItems}</List>;
 
   return (
     <main>
