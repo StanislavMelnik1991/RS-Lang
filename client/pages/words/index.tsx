@@ -1,6 +1,6 @@
-import { Checkbox, Button, Input } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
-
+import WordList from "./components/wordList";
 
 const Words = () => {
   const [wordsList, setWordsList] = useState<string[]>(["hello", "world"]);
@@ -12,16 +12,8 @@ const Words = () => {
     }
   };
 
-  const listItems = wordsList.map((word) => (
-    <li>
-      <Checkbox defaultChecked>{word}</Checkbox>
-    </li>
-  ));
-
-  const wordList = () => <ul>{listItems}</ul>;
-
   return (
-    <main>
+    <>
       <div className="new-word">
         <Input
           id="add_word"
@@ -39,8 +31,10 @@ const Words = () => {
           add word
         </Button>
       </div>
-      <div className="words-list">{wordList()}</div>
-    </main>
+      <div className="words-list">
+        {<WordList title="Заголовок словаря" words={wordsList} />}
+      </div>
+    </>
   );
 };
 

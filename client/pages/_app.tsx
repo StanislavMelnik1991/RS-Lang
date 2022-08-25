@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import { setupStore } from '../store/store';
 import { Provider } from 'react-redux';
+import AppLayout from '../layouts/appLayout'
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -10,7 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return <ChakraProvider>
     <Provider store={store}>
-      <Component {...pageProps} />
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
     </Provider>
   </ChakraProvider>;
 }

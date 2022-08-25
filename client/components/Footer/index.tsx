@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import styles from '../../styles/Home.module.css';
+import { Flex } from '@chakra-ui/react'
 
 const Footer: NextPage = () => (
-    <div className={styles.container}>
-      <footer className={styles.footer}>
+    <Flex justifyContent='center' borderTop='2px solid black'>
+      <footer>
         <div className='team'>
           team
         </div>
@@ -21,7 +22,7 @@ const Footer: NextPage = () => (
           </a>
         </div>
       </footer>
-    </div>
+    </Flex>
 );
 
 export default Footer;
