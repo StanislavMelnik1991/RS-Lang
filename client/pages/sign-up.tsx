@@ -9,6 +9,8 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import Close from '../assets/images/close.svg';
 import Open from '../assets/images/open.svg';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { signUp } from '../store/reducers/ActionCreators';
 
@@ -45,6 +47,8 @@ const SignUp = () => {
     router.replace('/login');
   }
   return (
+    <>
+    <Header />
     <form onSubmit={handleSubmit}>
       <VStack
         mx='auto'
@@ -106,6 +110,9 @@ const SignUp = () => {
         </Button>
       </VStack>
     </form>
+
+    <Footer />
+    </>
 
   );
 };

@@ -4,6 +4,8 @@ import {
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAppDispatch } from '../hooks/redux';
 import { login } from '../store/reducers/ActionCreators';
 
@@ -31,7 +33,9 @@ const Login = () => {
   });
 
   return (
-        <form onSubmit={handleSubmit}>
+        <>
+     <Header />
+     <form onSubmit={handleSubmit}>
             <VStack
                 mx='auto'
                 w={{ base: '90%', md: 500 }}
@@ -71,7 +75,8 @@ const Login = () => {
                 </Button>
             </VStack>
         </form>
-
+        <Footer />
+        </>
   );
 };
 
