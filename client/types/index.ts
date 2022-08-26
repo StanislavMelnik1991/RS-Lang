@@ -19,3 +19,12 @@ export interface NavItem {
     children?: Array<NavItem>;
     href?: string;
   }
+
+export interface MemberCardProps {
+    name: string;
+    role: string;
+    content: string;
+    avatar: string;
+    github: string;
+    index: number;
+  }
