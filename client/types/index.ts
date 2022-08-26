@@ -12,3 +12,10 @@ interface Word {
     }
 }
 export interface UserWord { userId: string; wordId: string; }
+
+export interface NavItem {
+    label: string;
+    subLabel?: string;
+    children?: Array<NavItem>;
+    href?: string;
+  }
