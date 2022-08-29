@@ -2,9 +2,17 @@ import {
   Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, VStack,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
 import * as Yup from 'yup';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { useAppDispatch } from '../hooks/redux';
+import { login } from '../store/reducers/ActionCreators';
 
 const Login = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const {
     handleChange, handleSubmit, values, errors, resetForm,
   } = useFormik({
@@ -17,14 +25,17 @@ const Login = () => {
       password: Yup.string().required('password is required'),
     }),
     onSubmit: (val) => {
-      // eslint-disable-next-line no-alert
-      alert(JSON.stringify(val, null, 2));
+      dispatch(login(val)).then(() => {
+        router.replace('/');
+      });
       resetForm();
     },
   });
 
   return (
-        <form onSubmit={handleSubmit}>
+        <>
+     <Header />
+     <form onSubmit={handleSubmit}>
             <VStack
                 mx='auto'
                 w={{ base: '90%', md: 500 }}
@@ -64,7 +75,8 @@ const Login = () => {
                 </Button>
             </VStack>
         </form>
-
+        <Footer />
+        </>
   );
 };
 

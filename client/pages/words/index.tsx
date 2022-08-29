@@ -1,9 +1,8 @@
-import { Button, Input } from "@chakra-ui/react";
-import { useState } from "react";
-import WordList from "./components/wordList";
+import { Checkbox, Button, Input } from '@chakra-ui/react';
+import { useState } from 'react';
 
 const Words = () => {
-  const [wordsList, setWordsList] = useState<string[]>(["hello", "world"]);
+  const [wordsList, setWordsList] = useState<string[]>(['hello', 'world']);
   const [newWord, setNewWord] = useState<string>();
 
   const addWord = () => {

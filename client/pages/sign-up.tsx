@@ -9,14 +9,15 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import Close from '../assets/images/close.svg';
 import Open from '../assets/images/open.svg';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { signUp } from '../store/reducers/ActionCreators';
 
 const SignUp = () => {
-
-  const router = useRouter()
-  const dispatch = useAppDispatch()
-  const {success} = useAppSelector(state => state.registerReducer)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { success } = useAppSelector((state) => state.registerReducer);
 
   const {
     handleChange, handleSubmit, values, errors, resetForm,
@@ -32,7 +33,7 @@ const SignUp = () => {
       password: Yup.string().required('password is required').min(6, 'Password must be at least 6 characters long'),
     }),
     onSubmit: (val) => {
-      dispatch(signUp(val))
+      dispatch(signUp(val));
       resetForm();
     },
   });
@@ -43,9 +44,11 @@ const SignUp = () => {
   };
 
   if (success) {
-    router.replace('/login')
- }
+    router.replace('/login');
+  }
   return (
+    <>
+    <Header />
     <form onSubmit={handleSubmit}>
       <VStack
         mx='auto'
@@ -107,6 +110,9 @@ const SignUp = () => {
         </Button>
       </VStack>
     </form>
+
+    <Footer />
+    </>
 
   );
 };
