@@ -31,17 +31,17 @@ export const authSlice = createSlice({
       state.authError = action.payload;
     },
     setIsLogged(state, action: PayloadAction<boolean>) {
-      state.isLoggedIn = action.payload
+      state.isLoggedIn = action.payload;
     },
     setName(state, action: PayloadAction<string>) {
-      state.name = action.payload
+      state.name = action.payload;
     },
     logout(state) {
       state.isLoggedIn = false;
       state.name = '';
       state.token = '';
       state.userID = '';
-    }
+    },
   },
 });
 

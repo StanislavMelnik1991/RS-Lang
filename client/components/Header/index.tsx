@@ -31,9 +31,7 @@ const Header = () => {
     const isLogged = localStorage.getItem('isLoggedIn');
     const savedName = localStorage.getItem('name');
     dispatch(authSlice.actions.setIsLogged(isLogged === 'true'));
-    if (savedName) {
-      dispatch(authSlice.actions.setName(JSON.parse(savedName)));
-    }
+    savedName && dispatch(authSlice.actions.setName(JSON.parse(savedName)));
   }, [dispatch]);
 
   const logout = () => {
