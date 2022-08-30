@@ -19,6 +19,8 @@ module.exports = {
 		"no-shadow": "off",
 		"@typescript-eslint/no-shadow": "off",
 		"no-plusplus": "off",
+		"no-unused-expressions": "off",
+  		"@typescript-eslint/no-unused-expressions": "off",
         "import/extensions": [1, {'tsx': "never"}]
 	},
 };
