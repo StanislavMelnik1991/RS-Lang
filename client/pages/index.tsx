@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useAppSelector } from '../hooks/redux';
 import { authSlice } from '../store/reducers/AuthSlice';
 import styles from '../styles/Home.module.css';
 
@@ -36,8 +35,6 @@ const Home: NextPage = () => {
       }
     }
   }, [dispatch]);
-
-  const { name } = useAppSelector((state) => state.authReducer);
 
   return (
     <div className={styles.container}>
