@@ -12,7 +12,7 @@ const Words = () => {
   };
 
   const listItems = wordsList.map((word) => (
-    <li>
+    <li key={word}>
       <Checkbox defaultChecked>{word}</Checkbox>
     </li>
   ));

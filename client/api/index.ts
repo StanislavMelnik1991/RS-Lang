@@ -1,11 +1,12 @@
-import { CreateUser, WordsResp } from './../types/index';
 import {
   CreateResp,
+  CreateUser,
   CreateUserWordReq,
   CreateUserWordResp,
   LoginResp,
   User,
   UserWord,
+  WordsResp,
 } from '../types';
 
 const baseLink = 'https://stanislau-rs-lang.herokuapp.com';
@@ -54,17 +55,17 @@ class Controller {
     return content;
   }
 
-  async getWords ({page, group}: {page: string, group: string}) {
+  async getWords({ page, group }: { page: string, group: string }) {
     const rawResponse = await fetch(`${this.baseLink}/words?page=${page}&group=${group}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-      }
-  })
-  const content: WordsResp = await rawResponse.json();
-      return content
- }
+      },
+    });
+    const content: WordsResp = await rawResponse.json();
+    return content;
+  }
 
   async createUserWord({ userId, word, wordId }: CreateUserWordReq) {
     if (!this.token) {

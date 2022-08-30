@@ -53,6 +53,7 @@ const Word = ({
           objectFit="cover"
           boxSize="100%"
           src={`https://stanislau-rs-lang.herokuapp.com/${image}`}
+          alt={word}
         />
       </Flex>
       <Stack
