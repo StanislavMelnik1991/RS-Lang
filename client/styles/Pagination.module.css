@@ -1,0 +1,27 @@
+.pagination {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px 0;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    cursor: pointer;
+  }
+  
+  .pagination a {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #9f7aea;
+    color: #9f7aea;
+  }
+  
+  .paginationLink {
+    font-weight: bold;
+  }
+  
+  .paginationLinkActive a {
+    color: #fff;
+    background: #9f7aea;
+  }
+  
