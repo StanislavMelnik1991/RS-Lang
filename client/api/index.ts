@@ -1,4 +1,4 @@
-import { CreateUser } from './../types/index';
+import { CreateUser, WordsResp } from './../types/index';
 import {
   CreateResp,
   CreateUserWordReq,
@@ -53,6 +53,18 @@ class Controller {
     }
     return content;
   }
+
+  async getWords ({page, group}: {page: string, group: string}) {
+    const rawResponse = await fetch(`${this.baseLink}/words?page=${page}&group=${group}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+  })
+  const content: WordsResp = await rawResponse.json();
+      return content
+ }
 
   async createUserWord({ userId, word, wordId }: CreateUserWordReq) {
     if (!this.token) {

@@ -1,3 +1,4 @@
+import { textBookSlice } from './TextBookSlice';
 import { User, CreateUser } from './../../types/index';
 import { AppDispatch } from './../store';
 import { registerSlice } from './RegisterSlice';
@@ -26,4 +27,15 @@ export const login = (user: User) => async (dispatch: AppDispatch) => {
     } catch(error) {
         dispatch(authSlice.actions.setErrorMessage("Incorrect login or password"))
     }
+}
+
+export const fetchWords = (page: string, group: string) => async (dispatch: AppDispatch) =>{
+  try {
+    const res = await Controller.getWords({page: page, group: group})
+    dispatch(textBookSlice.actions.setWords(res))
+    localStorage.setItem('group', group)
+    localStorage.setItem('page', page)
+  } finally {
+
+  }
 }
