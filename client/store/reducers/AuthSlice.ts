@@ -30,6 +30,18 @@ export const authSlice = createSlice({
     setErrorMessage(state, action: PayloadAction<string>) {
       state.authError = action.payload;
     },
+    setIsLogged(state, action: PayloadAction<boolean>) {
+      state.isLoggedIn = action.payload
+    },
+    setName(state, action: PayloadAction<string>) {
+      state.name = action.payload
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+      state.name = '';
+      state.token = '';
+      state.userID = '';
+    }
   },
 });
 

@@ -1,4 +1,3 @@
-import type { NextPage } from 'next';
 import {
   Box,
   Flex,
@@ -10,16 +9,37 @@ import {
   useColorModeValue,
   useDisclosure,
   Image,
+  Avatar,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
 } from '@chakra-ui/icons';
+import { useEffect } from 'react';
 import DesktopNav from '../Navigation/DesktopNav';
 import MobileNav from '../Navigation/MobileNav';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { authSlice } from '../../store/reducers/AuthSlice';
 
-const Header: NextPage = () => {
+const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
+
+  const dispatch = useAppDispatch();
+  const { isLoggedIn, name } = useAppSelector((state) => state.authReducer);
+
+  useEffect(() => {
+    const isLogged = localStorage.getItem('isLoggedIn');
+    const savedName = localStorage.getItem('name');
+    dispatch(authSlice.actions.setIsLogged(isLogged === 'true'));
+    if (savedName) {
+      dispatch(authSlice.actions.setName(JSON.parse(savedName)));
+    }
+  }, [dispatch]);
+
+  const logout = () => {
+    dispatch(authSlice.actions.logout());
+    localStorage.clear();
+  };
 
   return (
     <Box>
@@ -48,7 +68,7 @@ const Header: NextPage = () => {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Link href={'/'}>
-          <Image src='/dictionary.svg' alt="Logo" width={100} height={50}/>
+            <Image src='/dictionary.svg' alt="Logo" width={100} height={50} />
           </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -56,7 +76,7 @@ const Header: NextPage = () => {
           </Flex>
         </Flex>
 
-        <Stack
+        {!isLoggedIn && <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
@@ -82,7 +102,25 @@ const Header: NextPage = () => {
             }}>
             Регистрация
           </Button>
-        </Stack>
+        </Stack>}
+        {isLoggedIn && <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}>
+          <Avatar name={name}
+            bg={'purple.300'}
+          />
+          <Button
+            as={'a'}
+            fontSize={'lg'}
+            fontWeight={400}
+            variant={'link'}
+            onClick={logout}
+          >
+            Выход
+          </Button>
+        </Stack>}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>

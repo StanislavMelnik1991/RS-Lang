@@ -30,6 +30,7 @@ export const login = (user: User) => async (dispatch: AppDispatch) => {
   }
 };
 
+
 export const fetchWords = (page: string, group: string) => async (dispatch: AppDispatch) => {
   try {
     const res = await Controller.getWords({ page, group });
