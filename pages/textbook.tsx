@@ -18,11 +18,12 @@ import Pagination from '../components/Pagination';
 
 const Textbook = () => {
   const { words, group, page } = useAppSelector((state) => state.textBookReducer);
+  const { userID, token } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchWords(page, group));
-  }, [page, group, dispatch]);
+  }, [page, group, userID, token, dispatch]);
 
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
@@ -83,6 +84,8 @@ const Textbook = () => {
           textExampleTranslate={word.textExampleTranslate}
           textMeaningTranslate={word.textMeaningTranslate}
           wordTranslate={word.wordTranslate}
+          token={token}
+          userID={userID}
         />)
         }
       </SimpleGrid>

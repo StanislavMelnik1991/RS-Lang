@@ -9,14 +9,17 @@ import {
 } from '@chakra-ui/react';
 import { BellIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
-import { WordType } from '../../types';
+import { CreateUserWordReq, WordType } from '../../types';
+import Controller from '../../api/index';
+
+interface CurrentWordType extends WordType { userID: string, token: string }
 
 const Word = ({
   image, word, transcription, textMeaning,
   textExample, wordTranslate, textMeaningTranslate,
   textExampleTranslate, audio, audioMeaning,
-  audioExample,
-}: WordType) => {
+  audioExample, id, userID, token,
+}: CurrentWordType) => {
   const [isDisabled, setDisabled] = useState(false);
 
   const handlePlay = (word: string, audioMeaning: string, audioExample: string) => {
@@ -101,6 +104,38 @@ const Word = ({
           px={3}>
           {textExampleTranslate}
         </Text>
+        <Stack
+        width={'100%'}
+        justifyContent="space-between"
+        p={2}
+        pt={2}>
+        <Button
+          onClick={() => {
+            const wordParams: CreateUserWordReq = {
+              userId: userID,
+              word: {
+                difficulty: 'hard',
+              },
+              wordId: id,
+            };
+            Controller.setToken(token);
+            Controller.createUserWord(wordParams);
+          }}
+        >hard</Button>
+        <Button
+          onClick={() => {
+            const wordParams: CreateUserWordReq = {
+              userId: userID,
+              word: {
+                difficulty: 'weak',
+              },
+              wordId: id,
+            };
+            Controller.setToken(token);
+            Controller.createUserWord(wordParams);
+          }}
+        >weak</Button>
+      </Stack>
       </Stack>
     </Stack>
   );

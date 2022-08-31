@@ -49,7 +49,7 @@ class Controller {
     });
     const content: LoginResp = await rawResponse.json();
     if (content.token && content.userId) {
-      this.token = content.token;
+      this.setToken(content.token);
       this.userId = content.userId;
     }
     return content;
@@ -85,20 +85,27 @@ class Controller {
     return content;
   }
 
-  async getUserWord({ userId, wordId }: UserWord) {
-    if (!this.token) {
+  async getUserWord({ userId, wordId }: Partial<UserWord>) {
+    if (!this.token || !userId) {
       throw new Error('unauthorized user');
     }
-    const rawResponse = await fetch(`https://<your-app-name>.herokuapp.com/users/${userId}/words/${wordId}`, {
+    const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words/${wordId || ''}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${this.token}`,
         Accept: 'application/json',
       },
     });
-    const content: CreateUserWordResp = await rawResponse.json();
-
+    if (wordId) {
+      const content: CreateUserWordResp = await rawResponse.json();
+      return content;
+    }
+    const content: CreateUserWordResp[] = await rawResponse.json();
     return content;
+  }
+
+  setToken(token: string) {
+    this.token = token;
   }
 }
 export default new Controller(baseLink);

@@ -36,6 +36,12 @@ export const authSlice = createSlice({
     setName(state, action: PayloadAction<string>) {
       state.name = action.payload;
     },
+    setToken(state, action: PayloadAction<string>) {
+      state.token = action.payload;
+    },
+    setId(state, action: PayloadAction<string>) {
+      state.userID = action.payload;
+    },
     logout(state) {
       state.isLoggedIn = false;
       state.name = '';

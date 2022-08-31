@@ -30,8 +30,12 @@ const Header = () => {
   useEffect(() => {
     const isLogged = localStorage.getItem('isLoggedIn');
     const savedName = localStorage.getItem('name');
-    dispatch(authSlice.actions.setIsLogged(isLogged === 'true'));
+    const token = localStorage.getItem('token');
+    const userID = localStorage.getItem('userID');
     savedName && dispatch(authSlice.actions.setName(JSON.parse(savedName)));
+    token && dispatch(authSlice.actions.setToken(JSON.parse(token)));
+    userID && dispatch(authSlice.actions.setId(JSON.parse(userID)));
+    dispatch(authSlice.actions.setIsLogged(isLogged === 'true'));
   }, [dispatch]);
 
   const logout = () => {
