@@ -67,12 +67,12 @@ class Controller {
     return content;
   }
 
-  async createUserWord({ userId, word, wordId }: CreateUserWordReq) {
+  async createUserWord({ userId, word, wordId }: CreateUserWordReq, isUpdate?: boolean) {
     if (!this.token) {
       throw new Error('unauthorized user');
     }
     const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words/${wordId}`, {
-      method: 'POST',
+      method: isUpdate ? 'PUT' : 'POST',
       headers: {
         Authorization: `Bearer ${this.token}`,
         Accept: 'application/json',

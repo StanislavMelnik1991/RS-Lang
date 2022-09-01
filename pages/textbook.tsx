@@ -15,6 +15,8 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { textBookSlice } from '../store/reducers/TextBookSlice';
 import { fetchWords, getUserWords } from '../store/reducers/ActionCreators';
 import Pagination from '../components/Pagination';
+import { CreateUserWordReq, Difficulty } from '../types';
+import Controller from '../api/index';
 
 const Textbook = () => {
   const {
@@ -24,15 +26,31 @@ const Textbook = () => {
     hardWords,
     weakWords,
   } = useAppSelector((state) => state.textBookReducer);
-  const { userID, token } = useAppSelector((state) => state.authReducer);
+  const { userID, token, isLoggedIn } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+
+  const onClick = (difficulty: Difficulty, wordId: string) => {
+    Controller.setToken(token);
+    const wordParams: CreateUserWordReq = {
+      userId: userID,
+      word: {
+        difficulty,
+      },
+      wordId,
+    };
+
+    if (hardWords[wordId] || weakWords[wordId]) {
+      Controller.createUserWord(wordParams, true);
+    } else {
+      Controller.createUserWord(wordParams, false);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchWords(page, group));
     userID && dispatch(getUserWords(userID, token));
   }, [page, group, userID, token, dispatch]);
-  console.log(hardWords);
-  console.log(weakWords);
+
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
     dispatch(textBookSlice.actions.setGroup(group));
@@ -92,8 +110,10 @@ const Textbook = () => {
           textExampleTranslate={word.textExampleTranslate}
           textMeaningTranslate={word.textMeaningTranslate}
           wordTranslate={word.wordTranslate}
-          token={token}
-          userID={userID}
+          isHard={hardWords[word.id]}
+          isWeak={weakWords[word.id]}
+          isLogin={isLoggedIn}
+          onClick={onClick}
         />)
         }
       </SimpleGrid>

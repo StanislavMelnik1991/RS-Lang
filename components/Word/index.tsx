@@ -9,16 +9,20 @@ import {
 } from '@chakra-ui/react';
 import { BellIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
-import { CreateUserWordReq, WordType } from '../../types';
-import Controller from '../../api/index';
+import { Difficulty, WordType } from '../../types';
 
-interface CurrentWordType extends WordType { userID: string, token: string }
+interface CurrentWordType extends WordType {
+  isHard: boolean,
+  isWeak: boolean,
+  isLogin: boolean,
+  onClick: (difficulty: Difficulty, wordId: string) => void,
+}
 
 const Word = ({
   image, word, transcription, textMeaning,
   textExample, wordTranslate, textMeaningTranslate,
   textExampleTranslate, audio, audioMeaning,
-  audioExample, id, userID, token,
+  audioExample, id, isHard, isWeak, isLogin, onClick,
 }: CurrentWordType) => {
   const [isDisabled, setDisabled] = useState(false);
 
@@ -40,6 +44,11 @@ const Word = ({
     };
     playAudio(0);
   };
+  // отладка
+  if (isHard || isWeak) {
+    // eslint-disable-next-line no-console
+    console.log(`${word} is ${isHard ? 'hard' : ''}${isWeak ? 'weak' : ''}`);
+  }
 
   return (
 
@@ -48,10 +57,11 @@ const Word = ({
       borderRadius="lg"
       w={{ sm: '100%', md: '540px' }}
       direction={{ base: 'column', md: 'row' }}
-      bg={useColorModeValue('white', 'gray.900')}
+      // eslint-disable-next-line no-nested-ternary
+      bg={useColorModeValue(isHard ? '#d6c4c4' : isWeak ? '#c2cee1' : 'white', 'gray.900')}
       boxShadow={'2xl'}
       padding={4}>
-      <Flex flex={1} bg="blue.200">
+      <Flex flex={1} bg={'blue.200'}>
         <Image
           objectFit="cover"
           boxSize="100%"
@@ -105,37 +115,20 @@ const Word = ({
           {textExampleTranslate}
         </Text>
         <Stack
-        width={'100%'}
-        justifyContent="space-between"
-        p={2}
-        pt={2}>
-        <Button
-          onClick={() => {
-            const wordParams: CreateUserWordReq = {
-              userId: userID,
-              word: {
-                difficulty: 'hard',
-              },
-              wordId: id,
-            };
-            Controller.setToken(token);
-            Controller.createUserWord(wordParams);
-          }}
-        >hard</Button>
-        <Button
-          onClick={() => {
-            const wordParams: CreateUserWordReq = {
-              userId: userID,
-              word: {
-                difficulty: 'weak',
-              },
-              wordId: id,
-            };
-            Controller.setToken(token);
-            Controller.createUserWord(wordParams);
-          }}
-        >weak</Button>
-      </Stack>
+          width={'100%'}
+          justifyContent="space-between"
+          display={ !isLogin ? 'none' : 'flex'}
+          p={2}
+          pt={2}>
+          <Button
+            isDisabled={isHard}
+            onClick={() => onClick('hard', id)}
+          >hard</Button>
+          <Button
+            isDisabled={isWeak}
+            onClick={() => onClick('weak', id)}
+          >weak</Button>
+        </Stack>
       </Stack>
     </Stack>
   );

@@ -50,10 +50,10 @@ export const getUserWords = (userId: string, token: string) => async (dispatch: 
   const hardWords: AssociativeArr = {};
   words.forEach((word) => {
     if ((word.difficulty) === 'hard') {
-      hardWords[(word.id)] = true;
+      hardWords[(word.wordId)] = true;
     }
     if ((word.difficulty) === 'weak') {
-      weakWords[(word.id)] = true;
+      weakWords[(word.wordId)] = true;
     }
   });
   dispatch(textBookSlice.actions.setUserWords({ weakWords, hardWords }));

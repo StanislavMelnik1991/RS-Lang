@@ -6,14 +6,16 @@ export interface TextBookSlice {
   group: string;
   page: string;
   words: WordType[];
-  hardWords?: AssociativeArr
-  weakWords?: AssociativeArr
+  hardWords: AssociativeArr
+  weakWords: AssociativeArr
 }
 
 const initialState: TextBookSlice = {
   group: '0',
   page: '0',
   words: [],
+  hardWords: {},
+  weakWords: {},
 };
 
 export const textBookSlice = createSlice({
