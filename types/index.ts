@@ -1,5 +1,5 @@
 export interface User { email: string; password: string; }
-export interface CreateUser extends User { name: string}
+export interface CreateUser extends User { name: string }
 export interface CreateResp { id: string, email: string }
 export interface LoginResp { message: string, token: string, userId: string, name: string }
 export interface CreateUserWordReq extends UserWord { word: Word }
@@ -50,3 +50,5 @@ export interface MemberCardProps {
 }
 
 export type Difficulty = 'weak' | 'hard';
+
+export type AssociativeArr = { [id: string]: true };

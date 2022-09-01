@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WordType } from '../../types';
+import { AssociativeArr, WordType } from '../../types';
 
 export interface TextBookSlice {
   group: string;
   page: string;
-  words: WordType[]
+  words: WordType[];
+  hardWords?: AssociativeArr
+  weakWords?: AssociativeArr
 }
 
 const initialState: TextBookSlice = {
@@ -26,6 +28,20 @@ export const textBookSlice = createSlice({
     },
     setPage(state, action: PayloadAction<string>) {
       state.page = action.payload;
+    },
+    setUserWords(
+      state,
+      action: PayloadAction<{
+        hardWords?: AssociativeArr,
+        weakWords?: AssociativeArr
+      }>,
+    ) {
+      if (action.payload.hardWords) {
+        state.hardWords = { ...action.payload.hardWords };
+      }
+      if (action.payload.weakWords) {
+        state.weakWords = { ...action.payload.weakWords };
+      }
     },
   },
 });

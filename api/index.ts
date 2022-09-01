@@ -89,11 +89,12 @@ class Controller {
     if (!this.token || !userId) {
       throw new Error('unauthorized user');
     }
-    const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words/${wordId || ''}`, {
+    const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words${wordId || ''}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${this.token}`,
         Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     });
     if (wordId) {

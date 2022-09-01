@@ -13,18 +13,26 @@ import Header from '../components/Header';
 import Word from '../components/Word';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { textBookSlice } from '../store/reducers/TextBookSlice';
-import { fetchWords } from '../store/reducers/ActionCreators';
+import { fetchWords, getUserWords } from '../store/reducers/ActionCreators';
 import Pagination from '../components/Pagination';
 
 const Textbook = () => {
-  const { words, group, page } = useAppSelector((state) => state.textBookReducer);
+  const {
+    words,
+    group,
+    page,
+    hardWords,
+    weakWords,
+  } = useAppSelector((state) => state.textBookReducer);
   const { userID, token } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchWords(page, group));
+    userID && dispatch(getUserWords(userID, token));
   }, [page, group, userID, token, dispatch]);
-
+  console.log(hardWords);
+  console.log(weakWords);
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
     dispatch(textBookSlice.actions.setGroup(group));
