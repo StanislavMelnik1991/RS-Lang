@@ -1,5 +1,7 @@
 import { textBookSlice } from './TextBookSlice';
-import { User, CreateUser } from '../../types/index';
+import {
+  User, CreateUser, CreateUserWordResp, AssociativeArr,
+} from '../../types/index';
 import { AppDispatch } from '../store';
 import { registerSlice } from './RegisterSlice';
 import Controller from '../../api/index';
@@ -39,4 +41,20 @@ export const fetchWords = (page: string, group: string) => async (dispatch: AppD
   } catch (err) {
     throw new Error('err');
   }
+};
+
+export const getUserWords = (userId: string, token: string) => async (dispatch: AppDispatch) => {
+  Controller.setToken(token);
+  const words = await Controller.getUserWord({ userId }) as CreateUserWordResp[];
+  const weakWords: AssociativeArr = {};
+  const hardWords: AssociativeArr = {};
+  words.forEach((word) => {
+    if ((word.difficulty) === 'hard') {
+      hardWords[(word.wordId)] = true;
+    }
+    if ((word.difficulty) === 'weak') {
+      weakWords[(word.wordId)] = true;
+    }
+  });
+  dispatch(textBookSlice.actions.setUserWords({ weakWords, hardWords }));
 };

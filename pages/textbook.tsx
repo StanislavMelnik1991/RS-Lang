@@ -13,16 +13,38 @@ import Header from '../components/Header';
 import Word from '../components/Word';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { textBookSlice } from '../store/reducers/TextBookSlice';
-import { fetchWords } from '../store/reducers/ActionCreators';
+import { fetchWords, getUserWords } from '../store/reducers/ActionCreators';
 import Pagination from '../components/Pagination';
+import { CreateUserWordReq, Difficulty } from '../types';
+import Controller from '../api/index';
 
 const Textbook = () => {
-  const { words, group, page } = useAppSelector((state) => state.textBookReducer);
+  const {
+    words,
+    group,
+    page,
+    hardWords,
+    weakWords,
+  } = useAppSelector((state) => state.textBookReducer);
+  const { userID, token, isLoggedIn } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+
+  const onClick = (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => {
+    Controller.setToken(token);
+    const wordParams: CreateUserWordReq = {
+      userId: userID,
+      word: {
+        difficulty,
+      },
+      wordId,
+    };
+    Controller.setUserWord(wordParams, method);
+  };
 
   useEffect(() => {
     dispatch(fetchWords(page, group));
-  }, [page, group, dispatch]);
+    userID && dispatch(getUserWords(userID, token));
+  }, [page, group, userID, token, dispatch]);
 
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
@@ -83,6 +105,10 @@ const Textbook = () => {
           textExampleTranslate={word.textExampleTranslate}
           textMeaningTranslate={word.textMeaningTranslate}
           wordTranslate={word.wordTranslate}
+          isHard={hardWords[word.id]}
+          isWeak={weakWords[word.id]}
+          isLogin={isLoggedIn}
+          onClick={onClick}
         />)
         }
       </SimpleGrid>
