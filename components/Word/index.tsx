@@ -15,7 +15,7 @@ interface CurrentWordType extends WordType {
   isHard: boolean,
   isWeak: boolean,
   isLogin: boolean,
-  onClick: (difficulty: Difficulty, wordId: string) => void,
+  onClick: (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => void,
 }
 
 const Word = ({
@@ -44,11 +44,6 @@ const Word = ({
     };
     playAudio(0);
   };
-  // отладка
-  if (isHard || isWeak) {
-    // eslint-disable-next-line no-console
-    console.log(`${word} is ${isHard ? 'hard' : ''}${isWeak ? 'weak' : ''}`);
-  }
 
   return (
 
@@ -117,17 +112,15 @@ const Word = ({
         <Stack
           width={'100%'}
           justifyContent="space-between"
-          display={ !isLogin ? 'none' : 'flex'}
+          display={!isLogin ? 'none' : 'flex'}
           p={2}
           pt={2}>
           <Button
-            isDisabled={isHard}
-            onClick={() => onClick('hard', id)}
-          >hard</Button>
+            onClick={() => onClick('hard', id, isHard ? 'DELETE' : isWeak ? 'PUT' : 'POST')}
+          >{isHard ? 'not a hard' : 'hard'}</Button>
           <Button
-            isDisabled={isWeak}
-            onClick={() => onClick('weak', id)}
-          >weak</Button>
+            onClick={() => onClick('weak', id, isHard ? 'PUT' : isWeak ? 'DELETE' : 'POST')}
+          >{isWeak ? 'not a weak' : 'weak'}</Button>
         </Stack>
       </Stack>
     </Stack>

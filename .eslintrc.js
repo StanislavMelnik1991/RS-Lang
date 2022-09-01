@@ -21,6 +21,7 @@ module.exports = {
 		"no-plusplus": "off",
 		"no-unused-expressions": "off",
   		"@typescript-eslint/no-unused-expressions": "off",
-        "import/extensions": [1, {'tsx': "never"}]
+        "import/extensions": [1, {'tsx': "never"}],
+		"no-nested-ternary": "off"
 	},
 };

@@ -29,7 +29,7 @@ const Textbook = () => {
   const { userID, token, isLoggedIn } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
 
-  const onClick = (difficulty: Difficulty, wordId: string) => {
+  const onClick = (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => {
     Controller.setToken(token);
     const wordParams: CreateUserWordReq = {
       userId: userID,
@@ -38,12 +38,7 @@ const Textbook = () => {
       },
       wordId,
     };
-
-    if (hardWords[wordId] || weakWords[wordId]) {
-      Controller.createUserWord(wordParams, true);
-    } else {
-      Controller.createUserWord(wordParams, false);
-    }
+    Controller.setUserWord(wordParams, method);
   };
 
   useEffect(() => {

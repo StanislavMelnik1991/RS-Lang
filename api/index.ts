@@ -67,12 +67,12 @@ class Controller {
     return content;
   }
 
-  async createUserWord({ userId, word, wordId }: CreateUserWordReq, isUpdate?: boolean) {
+  async setUserWord({ userId, word, wordId }: CreateUserWordReq, method: 'PUT' | 'POST' | 'DELETE' | 'GET') {
     if (!this.token) {
       throw new Error('unauthorized user');
     }
-    const rawResponse = await fetch(`${this.baseLink}/users/${userId}/words/${wordId}`, {
-      method: isUpdate ? 'PUT' : 'POST',
+    await fetch(`${this.baseLink}/users/${userId}/words/${wordId}`, {
+      method,
       headers: {
         Authorization: `Bearer ${this.token}`,
         Accept: 'application/json',
@@ -80,9 +80,6 @@ class Controller {
       },
       body: JSON.stringify(word),
     });
-    const content: CreateUserWordResp = await rawResponse.json();
-
-    return content;
   }
 
   async getUserWord({ userId, wordId }: Partial<UserWord>) {
