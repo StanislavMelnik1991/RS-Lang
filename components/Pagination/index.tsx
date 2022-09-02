@@ -4,9 +4,10 @@ import s from '../../styles/Pagination.module.css';
 
 type PaginationProps = {
   onPageChange: (page: string) => void
+  pageCount?: number
 };
 
-const Pagination = ({ onPageChange }: PaginationProps) => {
+const Pagination = ({ onPageChange, pageCount }: PaginationProps) => {
   const handlePageClick = (page: string) => {
     onPageChange(page);
   };
@@ -17,7 +18,7 @@ const Pagination = ({ onPageChange }: PaginationProps) => {
         breakLabel="..."
         nextLabel=">"
         onPageChange={(selectedItem) => handlePageClick(`${selectedItem.selected}`)}
-        pageCount={30}
+        pageCount={pageCount || 30}
         previousLabel="<"
         className={s.pagination}
         activeClassName={s.paginationLinkActive}

@@ -36,10 +36,10 @@ const Textbook = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchWords(page, group));
+    dispatch(fetchWords(page, group, hardWords));
     userID && dispatch(getUserWords(userID, token));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, group, userID, token, dispatch]);
-
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
     dispatch(textBookSlice.actions.setGroup(group));
@@ -48,7 +48,7 @@ const Textbook = () => {
   const handleChangePage = (page: string) => {
     dispatch(textBookSlice.actions.setPage(page));
   };
-
+  const pageCount = Math.ceil(Object.keys(hardWords).length / 20);
   return <>
     <Header />
     <Flex
@@ -75,6 +75,7 @@ const Textbook = () => {
           <option value='3'>Раздел 4</option>
           <option value='4'>Раздел 5</option>
           <option value='5'>Раздел 6</option>
+          {isLoggedIn ? <option value='6'>Сложные слова</option> : ''}
         </Select>
 
       </Stack>
@@ -108,7 +109,7 @@ const Textbook = () => {
       </SimpleGrid>
     </Flex>
 
-    <Pagination onPageChange={handleChangePage} />
+    <Pagination onPageChange={handleChangePage} pageCount={group === '6' ? pageCount : undefined} />
 
     <Footer />
   </>;

@@ -29,8 +29,6 @@ export type WordType = {
   textExampleTranslate: string
 };
 
-export type WordsResp = Array<WordType>;
-
 export interface UserWord { userId: string; wordId: string; }
 
 export interface NavItem {
