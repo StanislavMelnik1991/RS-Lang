@@ -1,6 +1,6 @@
 import { textBookSlice } from './TextBookSlice';
 import {
-  User, CreateUser, CreateUserWordResp, AssociativeArr,
+  User, CreateUser, CreateUserWordResp, AssociativeArr, Difficulty, CreateUserWordReq,
 } from '../../types/index';
 import { AppDispatch } from '../store';
 import { registerSlice } from './RegisterSlice';
@@ -57,4 +57,21 @@ export const getUserWords = (userId: string, token: string) => async (dispatch: 
     }
   });
   dispatch(textBookSlice.actions.setUserWords({ weakWords, hardWords }));
+};
+
+export const updateUserWords = (
+  difficulty: Difficulty,
+  wordId: string,
+  method: 'PUT' | 'POST' | 'DELETE' | 'GET',
+  userId: string,
+) => async (dispatch: AppDispatch) => {
+  const wordParams: CreateUserWordReq = {
+    userId,
+    word: {
+      difficulty,
+    },
+    wordId,
+  };
+  Controller.setUserWord(wordParams, method);
+  dispatch(textBookSlice.actions.updateUserWords({ wordId, difficulty, method }));
 };
