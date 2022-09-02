@@ -13,10 +13,9 @@ import Header from '../components/Header';
 import Word from '../components/Word';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { textBookSlice } from '../store/reducers/TextBookSlice';
-import { fetchWords, getUserWords } from '../store/reducers/ActionCreators';
+import { fetchWords, getUserWords, updateUserWords } from '../store/reducers/ActionCreators';
 import Pagination from '../components/Pagination';
-import { CreateUserWordReq, Difficulty } from '../types';
-import Controller from '../api/index';
+import { Difficulty } from '../types';
 
 const Textbook = () => {
   const {
@@ -30,15 +29,10 @@ const Textbook = () => {
   const dispatch = useAppDispatch();
 
   const onClick = (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => {
-    Controller.setToken(token);
-    const wordParams: CreateUserWordReq = {
-      userId: userID,
-      word: {
-        difficulty,
-      },
-      wordId,
-    };
-    Controller.setUserWord(wordParams, method);
+    if (!userID) {
+      throw new Error('no user id');
+    }
+    dispatch(updateUserWords(difficulty, wordId, method, userID));
   };
 
   useEffect(() => {
