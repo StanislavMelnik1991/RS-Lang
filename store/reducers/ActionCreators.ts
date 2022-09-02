@@ -9,16 +9,19 @@ import { authSlice } from './AuthSlice';
 
 export const signUp = (user: CreateUser) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(registerSlice.actions.setIsLoading());
+    dispatch(registerSlice.actions.setIsLoading(true));
     await Controller.createUser(user);
     dispatch(registerSlice.actions.setSuccess());
   } catch (error) {
     dispatch(registerSlice.actions.setError('some error'));
+  } finally {
+    dispatch(registerSlice.actions.setIsLoading(false));
   }
 };
 
 export const login = (user: User) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(authSlice.actions.setIsLoading(true))
     const res = await Controller.loginUser(user);
     dispatch(
       authSlice.actions.loginSuccess({ userID: res.userId, name: res.name, token: res.token }),
@@ -29,6 +32,8 @@ export const login = (user: User) => async (dispatch: AppDispatch) => {
     localStorage.setItem('name', JSON.stringify(res.name));
   } catch (error) {
     dispatch(authSlice.actions.setErrorMessage('Incorrect login or password'));
+  } finally {
+    dispatch(authSlice.actions.setIsLoading(false))
   }
 };
 

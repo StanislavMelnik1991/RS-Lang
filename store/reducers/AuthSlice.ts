@@ -6,7 +6,8 @@ export interface AuthState {
   name: string,
   userID: string,
   isLoggedIn: boolean,
-  authError: string
+  authError: string,
+  isLoading: boolean
 }
 
 const initialState: AuthState = {
@@ -15,6 +16,7 @@ const initialState: AuthState = {
   userID: '',
   isLoggedIn: false,
   authError: '',
+  isLoading: false
 };
 
 export const authSlice = createSlice({
@@ -41,6 +43,9 @@ export const authSlice = createSlice({
     },
     setId(state, action: PayloadAction<string>) {
       state.userID = action.payload;
+    },
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload
     },
     logout(state) {
       state.isLoggedIn = false;
