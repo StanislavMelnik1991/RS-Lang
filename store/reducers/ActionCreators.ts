@@ -38,25 +38,29 @@ export const fetchWords = (page: string, group: string) => async (dispatch: AppD
     dispatch(textBookSlice.actions.setWords(res));
     localStorage.setItem('group', group);
     localStorage.setItem('page', page);
-  } catch (err) {
-    throw new Error('err');
+  } catch (err: any) {
+    throw new Error(err);
   }
 };
 
 export const getUserWords = (userId: string, token: string) => async (dispatch: AppDispatch) => {
-  Controller.setToken(token);
-  const words = await Controller.getUserWord({ userId }) as CreateUserWordResp[];
-  const weakWords: AssociativeArr = {};
-  const hardWords: AssociativeArr = {};
-  words.forEach((word) => {
-    if ((word.difficulty) === 'hard') {
-      hardWords[(word.wordId)] = true;
-    }
-    if ((word.difficulty) === 'weak') {
-      weakWords[(word.wordId)] = true;
-    }
-  });
-  dispatch(textBookSlice.actions.setUserWords({ weakWords, hardWords }));
+  try {
+    Controller.setToken(token);
+    const words = await Controller.getUserWord({ userId }) as CreateUserWordResp[];
+    const weakWords: AssociativeArr = {};
+    const hardWords: AssociativeArr = {};
+    words.forEach((word) => {
+      if ((word.difficulty) === 'hard') {
+        hardWords[(word.wordId)] = true;
+      }
+      if ((word.difficulty) === 'weak') {
+        weakWords[(word.wordId)] = true;
+      }
+    });
+    dispatch(textBookSlice.actions.setUserWords({ weakWords, hardWords }));
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
 
 export const updateUserWords = (
@@ -65,13 +69,17 @@ export const updateUserWords = (
   method: 'PUT' | 'POST' | 'DELETE' | 'GET',
   userId: string,
 ) => async (dispatch: AppDispatch) => {
-  const wordParams: CreateUserWordReq = {
-    userId,
-    word: {
-      difficulty,
-    },
-    wordId,
-  };
-  Controller.setUserWord(wordParams, method);
-  dispatch(textBookSlice.actions.updateUserWords({ wordId, difficulty, method }));
+  try {
+    const wordParams: CreateUserWordReq = {
+      userId,
+      word: {
+        difficulty,
+      },
+      wordId,
+    };
+    Controller.setUserWord(wordParams, method);
+    dispatch(textBookSlice.actions.updateUserWords({ wordId, difficulty, method }));
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
