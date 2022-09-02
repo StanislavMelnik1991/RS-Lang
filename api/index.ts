@@ -6,7 +6,7 @@ import {
   LoginResp,
   User,
   UserWord,
-  WordsResp,
+  WordType,
 } from '../types';
 
 const baseLink = 'https://stanislau-rs-lang.herokuapp.com';
@@ -55,6 +55,18 @@ class Controller {
     return content;
   }
 
+  async getWord(wordId: string) {
+    const rawResponse = await fetch(`${this.baseLink}/words/${wordId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const content: WordType = await rawResponse.json();
+    return content;
+  }
+
   async getWords({ page, group }: { page: string, group: string }) {
     const rawResponse = await fetch(`${this.baseLink}/words?page=${page}&group=${group}`, {
       method: 'GET',
@@ -63,7 +75,7 @@ class Controller {
         'Content-Type': 'application/json',
       },
     });
-    const content: WordsResp = await rawResponse.json();
+    const content: WordType[] = await rawResponse.json();
     return content;
   }
 
