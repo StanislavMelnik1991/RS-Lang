@@ -83,20 +83,3 @@ export const updateUserWords = (
     throw new Error(error);
   }
 };
-
-export const updateUserWords = (
-  difficulty: Difficulty,
-  wordId: string,
-  method: 'PUT' | 'POST' | 'DELETE' | 'GET',
-  userId: string,
-) => async (dispatch: AppDispatch) => {
-  const wordParams: CreateUserWordReq = {
-    userId,
-    word: {
-      difficulty,
-    },
-    wordId,
-  };
-  Controller.setUserWord(wordParams, method);
-  dispatch(textBookSlice.actions.updateUserWords({ wordId, difficulty, method }));
-};
