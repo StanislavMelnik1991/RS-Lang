@@ -32,10 +32,6 @@ export const login = (user: User) => async (dispatch: AppDispatch) => {
     dispatch(
       authSlice.actions.loginSuccess({ userID: res.userId, name: res.name, token: res.token }),
     );
-    localStorage.setItem('isLoggedIn', JSON.stringify(true));
-    localStorage.setItem('userID', JSON.stringify(res.userId));
-    localStorage.setItem('token', JSON.stringify(res.token));
-    localStorage.setItem('name', JSON.stringify(res.name));
   } catch (error) {
     dispatch(authSlice.actions.setErrorMessage('Incorrect login or password'));
   } finally {
@@ -69,13 +65,9 @@ export const fetchWords = (
         }
       });
       dispatch(textBookSlice.actions.setWords(await Promise.all(words)));
-      localStorage.setItem('group', group);
-      localStorage.setItem('page', page);
     } else {
       const res = await Controller.getWords({ page, group });
       dispatch(textBookSlice.actions.setWords(res));
-      localStorage.setItem('group', group);
-      localStorage.setItem('page', page);
     }
   } catch (err: any) {
     throw new Error(err);

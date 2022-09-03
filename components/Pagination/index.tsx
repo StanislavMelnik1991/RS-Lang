@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
+import { useAppSelector } from '../../hooks/redux';
 import s from '../../styles/Pagination.module.css';
 
 type PaginationProps = {
@@ -11,6 +12,8 @@ const Pagination = ({ onPageChange, pageCount }: PaginationProps) => {
   const handlePageClick = (page: string) => {
     onPageChange(page);
   };
+
+  const { page } = useAppSelector((state) => state.textBookReducer);
 
   return (
     <>
@@ -26,6 +29,7 @@ const Pagination = ({ onPageChange, pageCount }: PaginationProps) => {
         breakLinkClassName={s.paginationLink}
         nextLinkClassName={s.paginationLink}
         previousLinkClassName={s.paginationLink}
+        forcePage={Number(page)}
       />
     </>
   );

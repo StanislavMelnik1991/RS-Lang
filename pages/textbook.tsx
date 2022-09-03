@@ -42,15 +42,18 @@ const Textbook = () => {
     dispatch(fetchWords(page, group, hardWords));
     userID && dispatch(getUserWords(userID, token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, group, userID, token, dispatch]);
+  }, [page, group, userID, token]);
+
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
     dispatch(textBookSlice.actions.setGroup(group));
+    dispatch(textBookSlice.actions.setPage('0'));
   };
 
   const handleChangePage = (page: string) => {
     dispatch(textBookSlice.actions.setPage(page));
   };
+
   const pageCount = Math.ceil(Object.keys(hardWords).length / 20);
   return <>
     <Header />
@@ -66,7 +69,8 @@ const Textbook = () => {
           Изучай новые слова и составляй собственный словарь
         </Text>
 
-        <Select defaultValue={'0'}
+        <Select
+          value = {group}
           onChange={handleChangeGroup}
           bg='purple.400'
           borderColor='purple.400'

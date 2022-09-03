@@ -15,7 +15,6 @@ import {
   HamburgerIcon,
   CloseIcon,
 } from '@chakra-ui/icons';
-import { useEffect } from 'react';
 import DesktopNav from '../Navigation/DesktopNav';
 import MobileNav from '../Navigation/MobileNav';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -27,20 +26,8 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const { isLoggedIn, name } = useAppSelector((state) => state.authReducer);
 
-  useEffect(() => {
-    const isLogged = localStorage.getItem('isLoggedIn');
-    const savedName = localStorage.getItem('name');
-    const token = localStorage.getItem('token');
-    const userID = localStorage.getItem('userID');
-    savedName && dispatch(authSlice.actions.setName(JSON.parse(savedName)));
-    token && dispatch(authSlice.actions.setToken(JSON.parse(token)));
-    userID && dispatch(authSlice.actions.setId(JSON.parse(userID)));
-    dispatch(authSlice.actions.setIsLogged(isLogged === 'true'));
-  }, [dispatch]);
-
   const logout = () => {
     dispatch(authSlice.actions.logout());
-    localStorage.clear();
   };
 
   return (
