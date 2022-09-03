@@ -8,6 +8,7 @@ export interface TextBookSlice {
   words: WordType[];
   hardWords: AssociativeArr
   weakWords: AssociativeArr
+  isLoading: boolean
 }
 
 const initialState: TextBookSlice = {
@@ -16,12 +17,16 @@ const initialState: TextBookSlice = {
   words: [],
   hardWords: {},
   weakWords: {},
+  isLoading: false
 };
 
 export const textBookSlice = createSlice({
   name: 'textBook',
   initialState,
   reducers: {
+    setLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
+    },
     setWords(state, action: PayloadAction<Array<WordType>>) {
       state.words = action.payload;
     },

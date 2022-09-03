@@ -6,6 +6,8 @@ import {
   Stack,
   SimpleGrid,
   Flex,
+  VStack,
+  Spinner,
 } from '@chakra-ui/react';
 import { ChangeEvent, useEffect } from 'react';
 import Footer from '../components/Footer';
@@ -24,6 +26,7 @@ const Textbook = () => {
     page,
     hardWords,
     weakWords,
+    isLoading,
   } = useAppSelector((state) => state.textBookReducer);
   const { userID, token, isLoggedIn } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
@@ -38,7 +41,7 @@ const Textbook = () => {
   useEffect(() => {
     dispatch(fetchWords(page, group, hardWords));
     userID && dispatch(getUserWords(userID, token));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, group, userID, token, dispatch]);
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
@@ -80,6 +83,24 @@ const Textbook = () => {
 
       </Stack>
 
+      {isLoading
+        && <VStack
+          mx='auto'
+          w={{ base: '90%', md: 500 }}
+          h="70vh"
+          justifyContent="center"
+          alignSelf="center"
+          >
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='purple.400'
+            size='xl'
+          />
+        </VStack>
+      }
+
       <SimpleGrid columns={{ base: 1, xl: 2 }}
         spacing={'20'}
         mt={16}
@@ -107,6 +128,7 @@ const Textbook = () => {
         />)
         }
       </SimpleGrid>
+
     </Flex>
 
     <Pagination onPageChange={handleChangePage} pageCount={group === '6' ? pageCount : undefined} />
