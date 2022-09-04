@@ -6,7 +6,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react';
 import { BellIcon } from '@chakra-ui/icons';
 import { useState } from 'react';

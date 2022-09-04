@@ -17,7 +17,7 @@ const initialState: TextBookSlice = {
   words: [],
   hardWords: {},
   weakWords: {},
-  isLoading: false
+  isLoading: false,
 };
 
 export const textBookSlice = createSlice({
