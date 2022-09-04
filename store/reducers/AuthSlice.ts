@@ -16,7 +16,7 @@ const initialState: AuthState = {
   userID: '',
   isLoggedIn: false,
   authError: '',
-  isLoading: false
+  isLoading: false,
 };
 
 export const authSlice = createSlice({
@@ -45,7 +45,7 @@ export const authSlice = createSlice({
       state.userID = action.payload;
     },
     setIsLoading(state, action: PayloadAction<boolean>) {
-      state.isLoading = action.payload
+      state.isLoading = action.payload;
     },
     logout(state) {
       state.isLoggedIn = false;

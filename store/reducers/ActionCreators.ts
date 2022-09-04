@@ -54,7 +54,7 @@ export const fetchWords = (
   hardWords: AssociativeArr,
 ) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(textBookSlice.actions.setLoading(true))
+    dispatch(textBookSlice.actions.setLoading(true));
     const words: Promise<WordType>[] = [];
     if (group === '6') {
       const renderWords = fetchUserWords(hardWords, page);
@@ -72,7 +72,7 @@ export const fetchWords = (
   } catch (err: any) {
     throw new Error(err);
   } finally {
-    dispatch(textBookSlice.actions.setLoading(false))
+    dispatch(textBookSlice.actions.setLoading(false));
   }
 };
 

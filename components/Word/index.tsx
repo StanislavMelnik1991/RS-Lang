@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  IconButton,
 } from '@chakra-ui/react';
 import { BellIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
@@ -76,36 +77,42 @@ const Word = ({
         </Heading>
         <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
           {transcription}
-          <Button
+          <IconButton
+            size={'sm'}
+            ml={3}
+            colorScheme='gray'
+            aria-label='Search database'
             isDisabled={isDisabled}
-            onClick={() => handlePlay(audio, audioMeaning, audioExample)} >
-            <BellIcon />
-          </Button>
+            onClick={() => handlePlay(audio, audioMeaning, audioExample)}
+            icon={<BellIcon />}
+          />
         </Text>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
           px={3}>
-          {textMeaning}
+          {textMeaning.split('<i>')[0]}
+          <i>{textMeaning.split('<i>')[1].split('</i>')[0]}</i>
+          {textMeaning.split('</i>')[1]}
         </Text>
-        <Text>
-          {textExample}
+        <Text px={3}
+          textAlign={'center'}>
+          {textExample.split('<b>')[0]}
+          <b>{textExample.split('<b>')[1].split('</b>')[0]}</b>
+          {textExample.split('</b>')[1]}
+
         </Text>
-        <Text
-          textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
-          px={3}>
+        <Heading fontSize={'large'} fontFamily={'body'} color={'gray.600'}>
           {wordTranslate}
-        </Text>
+        </Heading>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
+          color={'gray.600'}
           px={3}>
           {textMeaningTranslate}
         </Text>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
+          color={'gray.600'}
           px={3}>
           {textExampleTranslate}
         </Text>
