@@ -47,6 +47,15 @@ export interface MemberCardProps {
   index: number;
 }
 
+
+export type QuizeSprintType = {
+  id: string,
+  word: string,
+  wordTranslate: string,
+  answer: boolean,
+};
+
 export type Difficulty = 'weak' | 'hard';
 
 export type AssociativeArr = { [id: string]: true };
+

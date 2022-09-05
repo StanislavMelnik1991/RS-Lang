@@ -1,9 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import appReducer from './reducers/AppSlice';
-import registerReducer from './reducers/RegisterSlice';
-import authReducer from './reducers/AuthSlice';
-import textBookReducer from './reducers/TextBookSlice';
-import { persistStore, 
+import {
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -11,34 +7,38 @@ import { persistStore,
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage' 
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import appReducer from './reducers/AppSlice';
+import registerReducer from './reducers/RegisterSlice';
+import authReducer from './reducers/AuthSlice';
+import textBookReducer from './reducers/TextBookSlice';
 
+import sprintReducer from './reducers/SprintSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-}
+};
 
 const rootReducer = combineReducers({
   appReducer,
   registerReducer,
   authReducer,
   textBookReducer,
+  sprintReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const setupStore = () => configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
 });
-
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
