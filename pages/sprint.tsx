@@ -140,7 +140,7 @@ const Sprint = () => {
     </Stack>;
     }
     return <Container>
-            {answers.length > 0 && inprogress === false ? <><OrderedList>{Statistics}</OrderedList><Button colorScheme='green'
+            {answers?.length > 0 && inprogress === false ? <><OrderedList>{Statistics}</OrderedList><Button colorScheme='green'
             margin={'10px'}
             size="lg"
             width={200}
