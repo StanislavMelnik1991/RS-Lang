@@ -1,5 +1,13 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js"
+  "/hooks/quizeGenerator": "pages/hooks/quizeGenerator.html",
+  "/": "pages/index.html",
+  "/sign-up": "pages/sign-up.html",
+  "/login": "pages/login.html",
+  "/sprint": "pages/sprint.html",
+  "/team": "pages/team.html",
+  "/textbook": "pages/textbook.html",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
 }
