@@ -107,6 +107,9 @@ export const updateUserWords = (
       userId,
       word: {
         difficulty,
+        optional: {
+          date: Date.now(),
+        },
       },
       wordId,
     };

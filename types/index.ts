@@ -7,9 +7,8 @@ export interface CreateUserWordResp extends Word { id: string; wordId: string; }
 interface Word {
   difficulty: Difficulty;
   optional?: {
-    testFieldString: string;
-    testFieldBoolean: boolean;
-  }
+    date?: number,
+  },
 }
 
 export type WordType = {
