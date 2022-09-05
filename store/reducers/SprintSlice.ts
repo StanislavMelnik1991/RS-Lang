@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WordType } from '../../types';
+import { WordType, QuizeSprintType } from '../../types';
 
 export interface SprintBookSlice {
   group: string;
@@ -8,6 +8,9 @@ export interface SprintBookSlice {
   words: WordType[];
   score: number;
   currentQuize: number;
+  hp: number;
+  inprogress: boolean;
+  answers: QuizeSprintType[];
 }
 
 const initialState: SprintBookSlice = {
@@ -16,6 +19,9 @@ const initialState: SprintBookSlice = {
   words: [],
   score: 0,
   currentQuize: 1,
+  hp: 3,
+  inprogress: false,
+  answers: [],
 };
 
 export const sprintSlice = createSlice({
@@ -36,6 +42,15 @@ export const sprintSlice = createSlice({
     },
     setCurrentQuize(state, action: PayloadAction<number>) {
       state.currentQuize = action.payload;
+    },
+    setHP(state, action: PayloadAction<number>) {
+      state.hp = action.payload;
+    },
+    setInprogress(state, action: PayloadAction<boolean>) {
+      state.inprogress = action.payload;
+    },
+    setAnswers(state, action: PayloadAction<Array<QuizeSprintType>>) {
+      state.answers = action.payload;
     },
   },
 });
