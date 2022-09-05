@@ -51,7 +51,7 @@ const fetchUserWords = (hardWords: AssociativeArr, page: string) => {
 export const fetchWords = (
   page: string,
   group: string,
-  hardWords: AssociativeArr,
+  hardWords?: AssociativeArr,
 ) => async (dispatch: AppDispatch) => {
   try {
     dispatch(textBookSlice.actions.setLoading(true));

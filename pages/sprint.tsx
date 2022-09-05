@@ -93,7 +93,7 @@ const Sprint = () => {
     startTimer();
   };
 
-  const Statistics = answers.map((word) => (
+  const Statistics = answers?.map((word) => (
       <ListItem key={word.id}>
         <Checkbox defaultChecked={word.answer}>{word.word}</Checkbox>
       </ListItem>
@@ -140,7 +140,7 @@ const Sprint = () => {
     </Stack>;
     }
     return <Container>
-            {answers.length > 0 && inprogress === false ? <><OrderedList>{Statistics}</OrderedList><Button colorScheme='green'
+            {answers?.length > 0 && inprogress === false ? <><OrderedList>{Statistics}</OrderedList><Button colorScheme='green'
             margin={'10px'}
             size="lg"
             width={200}
