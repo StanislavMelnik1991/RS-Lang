@@ -1,17 +1,18 @@
 import {
-  Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, VStack,
+  Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Spinner, VStack,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { login } from '../store/reducers/ActionCreators';
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.authReducer);
 
   const {
     handleChange, handleSubmit, values, errors, resetForm,
@@ -31,6 +32,25 @@ const Login = () => {
       resetForm();
     },
   });
+
+  if (isLoading) {
+    return <>
+  <Header />
+  <VStack
+      mx='auto'
+      w={{ base: '90%', md: 500 }}
+      h="100vh"
+      justifyContent="center" >
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='gray.200'
+      color='purple.400'
+      size='xl'
+ />
+  </VStack>
+  </>;
+  }
 
   return (
         <>

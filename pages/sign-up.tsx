@@ -1,14 +1,13 @@
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
   Button, FormControl, FormErrorMessage,
   FormLabel, Heading, Input, InputGroup,
-  InputRightElement, VStack,
+  InputRightElement, Spinner, VStack,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import Close from '../assets/images/close.svg';
-import Open from '../assets/images/open.svg';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
@@ -17,7 +16,7 @@ import { signUp } from '../store/reducers/ActionCreators';
 const SignUp = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { success } = useAppSelector((state) => state.registerReducer);
+  const { isLoading, success } = useAppSelector((state) => state.registerReducer);
 
   const {
     handleChange, handleSubmit, values, errors, resetForm,
@@ -42,6 +41,25 @@ const SignUp = () => {
   const handleClick = () => {
     setShowPass(!showPass);
   };
+
+  if (isLoading) {
+    return <>
+  <Header />
+  <VStack
+      mx='auto'
+      w={{ base: '90%', md: 500 }}
+      h="100vh"
+      justifyContent="center" >
+    <Spinner
+      thickness='4px'
+      speed='0.65s'
+      emptyColor='gray.200'
+      color='purple.400'
+      size='xl'
+    />
+  </VStack>
+  </>;
+  }
 
   if (success) {
     router.replace('/login');
@@ -97,9 +115,10 @@ const SignUp = () => {
             />
             <InputRightElement
               width='40px'
-              paddingRight='10px'
+              paddingRight='20px'
               onClick={handleClick}>
-              {showPass ? <Close fill='purple' /> : <Open fill='purple' />}
+              {showPass ? <ViewIcon boxSize={'xm'} color='purple.300'/>
+                : <ViewOffIcon boxSize={'xm'} color='purple.300'/>}
             </InputRightElement>
           </InputGroup>
           <FormErrorMessage>{errors.password}</FormErrorMessage>

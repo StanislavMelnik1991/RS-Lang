@@ -6,17 +6,25 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  IconButton,
 } from '@chakra-ui/react';
 import { BellIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
-import { WordType } from '../../types';
+import { Difficulty, WordType } from '../../types';
+
+interface CurrentWordType extends WordType {
+  isHard: boolean,
+  isWeak: boolean,
+  isLogin: boolean,
+  onClick: (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => void,
+}
 
 const Word = ({
   image, word, transcription, textMeaning,
   textExample, wordTranslate, textMeaningTranslate,
   textExampleTranslate, audio, audioMeaning,
-  audioExample,
-}: WordType) => {
+  audioExample, id, isHard, isWeak, isLogin, onClick,
+}: CurrentWordType) => {
   const [isDisabled, setDisabled] = useState(false);
 
   const handlePlay = (word: string, audioMeaning: string, audioExample: string) => {
@@ -45,10 +53,11 @@ const Word = ({
       borderRadius="lg"
       w={{ sm: '100%', md: '540px' }}
       direction={{ base: 'column', md: 'row' }}
-      bg={useColorModeValue('white', 'gray.900')}
+      // eslint-disable-next-line no-nested-ternary
+      bg={useColorModeValue(isHard ? '#d6c4c4' : isWeak ? '#c2cee1' : 'white', 'gray.900')}
       boxShadow={'2xl'}
       padding={4}>
-      <Flex flex={1} bg="blue.200">
+      <Flex flex={1} bg={'blue.200'}>
         <Image
           objectFit="cover"
           boxSize="100%"
@@ -68,39 +77,58 @@ const Word = ({
         </Heading>
         <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
           {transcription}
-          <Button
+          <IconButton
+            size={'sm'}
+            ml={3}
+            colorScheme='gray'
+            aria-label='Search database'
             isDisabled={isDisabled}
-            onClick={() => handlePlay(audio, audioMeaning, audioExample)} >
-            <BellIcon />
-          </Button>
+            onClick={() => handlePlay(audio, audioMeaning, audioExample)}
+            icon={<BellIcon />}
+          />
         </Text>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
           px={3}>
-          {textMeaning}
+          {textMeaning.split('<i>')[0]}
+          <i>{textMeaning.split('<i>')[1].split('</i>')[0]}</i>
+          {textMeaning.split('</i>')[1]}
         </Text>
-        <Text>
-          {textExample}
+        <Text px={3}
+          textAlign={'center'}>
+          {textExample.split('<b>')[0]}
+          <b>{textExample.split('<b>')[1].split('</b>')[0]}</b>
+          {textExample.split('</b>')[1]}
+
         </Text>
-        <Text
-          textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
-          px={3}>
+        <Heading fontSize={'large'} fontFamily={'body'} color={'gray.600'}>
           {wordTranslate}
-        </Text>
+        </Heading>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
+          color={'gray.600'}
           px={3}>
           {textMeaningTranslate}
         </Text>
         <Text
           textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
+          color={'gray.600'}
           px={3}>
           {textExampleTranslate}
         </Text>
+        <Stack
+          width={'100%'}
+          justifyContent="space-between"
+          display={!isLogin ? 'none' : 'flex'}
+          p={2}
+          pt={2}>
+          <Button
+            onClick={() => onClick('hard', id, isHard ? 'DELETE' : isWeak ? 'PUT' : 'POST')}
+          >{isHard ? 'not a hard' : 'hard'}</Button>
+          <Button
+            onClick={() => onClick('weak', id, isHard ? 'PUT' : isWeak ? 'DELETE' : 'POST')}
+          >{isWeak ? 'not a weak' : 'weak'}</Button>
+        </Stack>
       </Stack>
     </Stack>
   );
