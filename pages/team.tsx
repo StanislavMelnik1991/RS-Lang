@@ -18,7 +18,7 @@ const TEAM_MEMBERS = [
     name: 'Алекс',
     role: 'Developer',
     content:
-      'В процессе разработки, что-то делается, но что писать в описании пока не понятно.',
+      'Принимал активное участие в разработке',
     avatar:
       'https://avatars.githubusercontent.com/u/10365094?v=4',
     github: 'https://github.com/alexger95',
@@ -27,7 +27,7 @@ const TEAM_MEMBERS = [
     name: 'Ксю',
     role: 'Developer',
     content:
-      'В процессе разработки, что-то делается, но что писать в описании пока не понятно.',
+      'Основной front-end разработчик. Отвечала за главную страницу, регистрацию, учебник. Принимала активное участие в разработке',
     avatar:
       'https://avatars.githubusercontent.com/u/70837696?v=4',
     github: 'https://github.com/KseniyaMelnik',
@@ -36,7 +36,7 @@ const TEAM_MEMBERS = [
     name: 'Стас',
     role: 'Developer',
     content:
-      'В процессе разработки, что-то делается, но что писать в описании пока не понятно.',
+      'Team-lead проекта. Организация задач в Jira, деплой сервера, активное участие в разработке',
     avatar:
       'https://avatars.githubusercontent.com/u/95521674?v=4',
     github: 'https://github.com/StanislavMelnik1991',

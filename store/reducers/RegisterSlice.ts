@@ -17,8 +17,8 @@ export const registerSlice = createSlice({
   name: 'registration',
   initialState,
   reducers: {
-    setIsLoading(state) {
-      state.isLoading = true;
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload;
     },
     setError(state, action: PayloadAction<string>) {
       state.isLoading = false;

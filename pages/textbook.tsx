@@ -6,6 +6,8 @@ import {
   Stack,
   SimpleGrid,
   Flex,
+  VStack,
+  Spinner,
 } from '@chakra-ui/react';
 import { ChangeEvent, useEffect } from 'react';
 import Footer from '../components/Footer';
@@ -13,26 +15,46 @@ import Header from '../components/Header';
 import Word from '../components/Word';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { textBookSlice } from '../store/reducers/TextBookSlice';
-import { fetchWords } from '../store/reducers/ActionCreators';
+import { fetchWords, getUserWords, updateUserWords } from '../store/reducers/ActionCreators';
 import Pagination from '../components/Pagination';
+import { Difficulty } from '../types';
 
 const Textbook = () => {
-  const { words, group, page } = useAppSelector((state) => state.textBookReducer);
+  const {
+    words,
+    group,
+    page,
+    hardWords,
+    weakWords,
+    isLoading,
+  } = useAppSelector((state) => state.textBookReducer);
+  const { userID, token, isLoggedIn } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
 
+  const onClick = (difficulty: Difficulty, wordId: string, method: 'PUT' | 'POST' | 'DELETE' | 'GET') => {
+    if (!userID) {
+      throw new Error('no user id');
+    }
+    dispatch(updateUserWords(difficulty, wordId, method, userID));
+  };
+
   useEffect(() => {
-    dispatch(fetchWords(page, group));
-  }, [page, group, dispatch]);
+    dispatch(fetchWords(page, group, hardWords));
+    userID && dispatch(getUserWords(userID, token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, group, userID, token]);
 
   const handleChangeGroup = (e: ChangeEvent<HTMLSelectElement>) => {
     const group = e.currentTarget.value;
     dispatch(textBookSlice.actions.setGroup(group));
+    dispatch(textBookSlice.actions.setPage('0'));
   };
 
   const handleChangePage = (page: string) => {
     dispatch(textBookSlice.actions.setPage(page));
   };
-  console.log(words);
+
+  const pageCount = Math.ceil(Object.keys(hardWords).length / 20);
   return <>
     <Header />
     <Flex
@@ -47,7 +69,8 @@ const Textbook = () => {
           Изучай новые слова и составляй собственный словарь
         </Text>
 
-        <Select defaultValue={'0'}
+        <Select
+          value = {group}
           onChange={handleChangeGroup}
           bg='purple.400'
           borderColor='purple.400'
@@ -59,9 +82,28 @@ const Textbook = () => {
           <option value='3'>Раздел 4</option>
           <option value='4'>Раздел 5</option>
           <option value='5'>Раздел 6</option>
+          {isLoggedIn ? <option value='6'>Сложные слова</option> : ''}
         </Select>
 
       </Stack>
+
+      {isLoading
+        && <VStack
+          mx='auto'
+          w={{ base: '90%', md: 500 }}
+          h="70vh"
+          justifyContent="center"
+          alignSelf="center"
+          >
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='purple.400'
+            size='xl'
+          />
+        </VStack>
+      }
 
       <SimpleGrid columns={{ base: 1, xl: 2 }}
         spacing={'20'}
@@ -83,12 +125,17 @@ const Textbook = () => {
           textExampleTranslate={word.textExampleTranslate}
           textMeaningTranslate={word.textMeaningTranslate}
           wordTranslate={word.wordTranslate}
+          isHard={hardWords[word.id]}
+          isWeak={weakWords[word.id]}
+          isLogin={isLoggedIn}
+          onClick={onClick}
         />)
         }
       </SimpleGrid>
+
     </Flex>
 
-    <Pagination onPageChange={handleChangePage} />
+    <Pagination onPageChange={handleChangePage} pageCount={group === '6' ? pageCount : undefined} />
 
     <Footer />
   </>;

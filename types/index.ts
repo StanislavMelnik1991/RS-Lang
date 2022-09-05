@@ -1,12 +1,12 @@
 export interface User { email: string; password: string; }
-export interface CreateUser extends User { name: string}
+export interface CreateUser extends User { name: string }
 export interface CreateResp { id: string, email: string }
 export interface LoginResp { message: string, token: string, userId: string, name: string }
 export interface CreateUserWordReq extends UserWord { word: Word }
 export interface CreateUserWordResp extends Word { id: string; wordId: string; }
 interface Word {
-  difficulty: string;
-  optional: {
+  difficulty: Difficulty;
+  optional?: {
     testFieldString: string;
     testFieldBoolean: boolean;
   }
@@ -29,8 +29,6 @@ export type WordType = {
   textExampleTranslate: string
 };
 
-export type WordsResp = Array<WordType>;
-
 export interface UserWord { userId: string; wordId: string; }
 
 export interface NavItem {
@@ -49,9 +47,15 @@ export interface MemberCardProps {
   index: number;
 }
 
+
 export type QuizeSprintType = {
   id: string,
   word: string,
   wordTranslate: string,
   answer: boolean,
 };
+
+export type Difficulty = 'weak' | 'hard';
+
+export type AssociativeArr = { [id: string]: true };
+
