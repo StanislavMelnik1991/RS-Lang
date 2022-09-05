@@ -48,3 +48,10 @@ export interface MemberCardProps {
   github: string;
   index: number;
 }
+
+export type QuizeSprintType = {
+  id: string,
+  word: string,
+  wordTranslate: string,
+  answer: boolean,
+};

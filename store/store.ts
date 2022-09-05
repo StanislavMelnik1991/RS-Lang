@@ -3,12 +3,14 @@ import appReducer from './reducers/AppSlice';
 import registerReducer from './reducers/RegisterSlice';
 import authReducer from './reducers/AuthSlice';
 import textBookReducer from './reducers/TextBookSlice';
+import sprintReducer from './reducers/SprintSlice';
 
 const rootReducer = combineReducers({
   appReducer,
   registerReducer,
   authReducer,
   textBookReducer,
+  sprintReducer,
 });
 
 export const setupStore = () => configureStore({

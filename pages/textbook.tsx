@@ -32,7 +32,7 @@ const Textbook = () => {
   const handleChangePage = (page: string) => {
     dispatch(textBookSlice.actions.setPage(page));
   };
-
+  console.log(words);
   return <>
     <Header />
     <Flex
