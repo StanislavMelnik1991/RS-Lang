@@ -93,7 +93,7 @@ const Sprint = () => {
     startTimer();
   };
 
-  const Statistics = answers.map((word) => (
+  const Statistics = answers?.map((word) => (
       <ListItem key={word.id}>
         <Checkbox defaultChecked={word.answer}>{word.word}</Checkbox>
       </ListItem>

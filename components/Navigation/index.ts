@@ -16,7 +16,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: 'Спринт',
         subLabel: 'Повторяй изученные слова',
-        href: '#',
+        href: '/sprint',
       },
     ],
   },
