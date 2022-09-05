@@ -36,7 +36,7 @@ const TEAM_MEMBERS = [
     name: 'Стас',
     role: 'Developer',
     content:
-      'В процессе разработки, что-то делается, но что писать в описании пока не понятно.',
+      'Team-lead проекта. Организация задач в Jira, деплой сервера, активное участие в разработке ',
     avatar:
       'https://avatars.githubusercontent.com/u/95521674?v=4',
     github: 'https://github.com/StanislavMelnik1991',
